@@ -87,6 +87,18 @@ Resources:
           ToPort: 80
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
+          FromPort: 8881
+          ToPort: 8881
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8081
+          ToPort: 8081
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8899
+          ToPort: 8899
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
@@ -94,7 +106,7 @@ Resources:
   PubInstance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0f8db7110ff3a3dd1 
+      ImageId: ami-051820d753c9dd997 
       InstanceType: t2.large
       KeyName: !Ref KeyName
       SecurityGroupIds: 
@@ -105,7 +117,7 @@ Resources:
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: ami-0f8db7110ff3a3dd1 
+      ImageId: ami-051820d753c9dd997
       InstanceType: t2.large
       KeyName: !Ref KeyName
       SecurityGroups:
@@ -113,26 +125,10 @@ Resources:
       IamInstanceProfile: !Ref InstanceProfile
       UserData: 
         Fn::Base64: |
-          #!/bin/bash
-          exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
-          set -x
-
-          # Atualizar e instalar dependências
-          sudo apt-get update -y
-          sudo apt-get upgrade -y
-          sudo apt-get install -y python3-pip git
-
-          # Clonar o repositório do GitHub
-          git clone https://github.com/DiogoWolfie/Cloud_AWS.git /home/ubuntu/Cloud_app
-
-          # Entrar no diretório clonado
+          
           cd /home/ubuntu/Cloud_app
-
-          # Instalar dependências do Python
-          pip3 install -r requirements.txt --break-system-packages
-
-          # Iniciar a aplicação
-          nohup python3 aplicacao.py > /var/log/aplicacao.log 2>&1 &
+          
+          nohup python3 aplicacao.py
 
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
