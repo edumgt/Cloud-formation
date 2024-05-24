@@ -123,12 +123,12 @@ Resources:
       SecurityGroups:
         - !Ref EC2SecurityGroup
       IamInstanceProfile: !Ref InstanceProfile
-      UserData: 
-        Fn::Base64: |
-          
-          cd /home/ubuntu/Cloud_app
-          
-          nohup python3 aplicacao.py
+      
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash -xe
+            nohup python3 /home/ubuntu/Cloud_app/aplicacao.py
 
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -237,7 +237,7 @@ Resources:
       HealthCheckEnabled: true
       HealthCheckProtocol: HTTP
       HealthCheckPort: '80'
-      HealthCheckPath: /health
+      HealthCheckPath: /
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 3
       UnhealthyThresholdCount: 3
