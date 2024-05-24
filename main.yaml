@@ -27,7 +27,7 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: 10.0.1.0/24
       MapPublicIpOnLaunch: true
-      AvailabilityZone: us-east-2a
+      AvailabilityZone: ap-northeast-2a
 
   SubnetB:
     Type: AWS::EC2::Subnet
@@ -35,7 +35,7 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: 10.0.2.0/24
       MapPublicIpOnLaunch: true
-      AvailabilityZone: us-east-2b
+      AvailabilityZone: ap-northeast-2b
 
   SubnetC:
     Type: AWS::EC2::Subnet
@@ -43,7 +43,7 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: 10.0.3.0/24
       MapPublicIpOnLaunch: true
-      AvailabilityZone: us-east-2c
+      AvailabilityZone: ap-northeast-2c
 
   RouteT:
     Type: AWS::EC2::RouteTable
@@ -94,8 +94,8 @@ Resources:
   PubInstance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-09040d770ffe2224f 
-      InstanceType: t2.micro
+      ImageId: ami-0f8db7110ff3a3dd1 
+      InstanceType: t2.large
       KeyName: !Ref KeyName
       SecurityGroupIds: 
         - !Ref EC2SecurityGroup
@@ -105,8 +105,8 @@ Resources:
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: ami-09040d770ffe2224f 
-      InstanceType: t2.micro
+      ImageId: ami-0f8db7110ff3a3dd1 
+      InstanceType: t2.large
       KeyName: !Ref KeyName
       SecurityGroups:
         - !Ref EC2SecurityGroup
